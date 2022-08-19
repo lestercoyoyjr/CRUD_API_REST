@@ -14,3 +14,5 @@ conexion.connect((err) => {
     }
     console.log('Conexion establecida!');
 })
+
+module.exports = conexion;
