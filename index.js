@@ -22,6 +22,20 @@ app.get('/productos', (req,res) => {
     })
 });
 
+app.get('/productos/:id', (req,res) => {
+    console.log(req.params.id);
+    const sql = "SELECT * FROM frutas WHERE Id=?"
+    const ID= req.params.id
+    db.query(sql, [ID] , (err, data) =>{
+        if(err) return err;
+
+        res.json({ 
+            mensaje: 'Resultados',
+            data
+        })
+    })
+});
+
 app.post('/productos', (req,res) => {
     console.log(Object.values(req.body))
     const values = Object.values(req.body);
@@ -38,6 +52,7 @@ app.post('/productos', (req,res) => {
         })
     })
 })
+
 
 app.listen(PORT, () => {
     console.log('Servidor en ejecucion en el puerto: '+ PORT);
