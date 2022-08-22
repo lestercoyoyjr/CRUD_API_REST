@@ -8,6 +8,37 @@ app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
+
+// REST Services
+app.get('/productos', (req,res) => {
+    db.query('SELECT * FROM frutas', (err, data) =>{
+        if(err) return err;
+
+        res.json({ 
+            mensaje: 'Resultados',
+            data
+        })
+    })
+});
+
+app.post('/productos', (req,res) => {
+    console.log(Object.values(req.body))
+    const values = Object.values(req.body);
+    const sql = "INSERT INTO frutas (Nombre, Color, Precio) VALUES (?,?,?)"
+
+    db.query(sql, values, (err,data) => {
+        if(err){
+            console.log(err)
+            return err;
+        }
+        res.json({
+            mensaje: 'Producto agregado',
+            data
+        })
+    })
+})
+
 app.listen(PORT, () => {
     console.log('Servidor en ejecucion en el puerto: '+ PORT);
 })
