@@ -53,6 +53,22 @@ app.post('/productos', (req,res) => {
     })
 })
 
+app.put('/productos', (req,res) => {
+    console.log(Object.values(req.body))
+    const values = Object.values(req.body);
+    const sql = "UPDATE frutas SET Nombre=?, Color=?, Precio=? WHERE Id=?"
+
+    db.query(sql, values, (err,result) => {
+        if(err){
+            console.log(err)
+            return err;
+        }
+        res.json({
+            mensaje: 'Producto editado correctamente',
+            result
+        })
+    })
+});
 
 app.listen(PORT, () => {
     console.log('Servidor en ejecucion en el puerto: '+ PORT);
