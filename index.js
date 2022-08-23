@@ -70,6 +70,20 @@ app.put('/productos', (req,res) => {
     })
 });
 
+app.delete('/productos/:id', (req,res) => {
+    console.log(req.params.id);
+    const sql = "DELETE FROM frutas WHERE Id=?"
+    const ID= req.params.id
+    db.query(sql, [ID] , (err, data) =>{
+        if(err) return err;
+
+        res.json({ 
+            mensaje: 'Producto Eliminado correctamente',
+            data
+        })
+    })
+});
+
 app.listen(PORT, () => {
     console.log('Servidor en ejecucion en el puerto: '+ PORT);
 })
